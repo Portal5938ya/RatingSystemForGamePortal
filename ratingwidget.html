@@ -19,45 +19,33 @@
   </div>
 
   <textarea id="review" placeholder="Leave your review here..."></textarea>
-  <button onclick="submitReview()">Submit</button>
+<form action="https://script.google.com/macros/s/AKfycbwVa_ydp0T9YT2-9gfW14WXrQ3IQdZlM9-SgCO-tkkxx4Mq6U0PtHbFV_Y60LpTobbpag/exec" method="POST" onsubmit="return validateForm()">
+  <input type="hidden" name="rating" id="ratingInput">
+  <textarea name="review" id="review" placeholder="Leave your review here..."></textarea>
+  <button type="submit">Submit</button>
+</form>
 
-  <script>
-    let selectedRating = 0;
-    const stars = document.querySelectorAll('.star');
-    stars.forEach(star => {
-      star.addEventListener('click', () => {
-        stars.forEach(s => s.classList.remove('selected'));
-        star.classList.add('selected');
-        selectedRating = star.dataset.value;
-      });
+<script>
+  let selectedRating = 0;
+  const stars = document.querySelectorAll('.star');
+  stars.forEach(star => {
+    star.addEventListener('click', () => {
+      stars.forEach(s => s.classList.remove('selected'));
+      star.classList.add('selected');
+      selectedRating = star.dataset.value;
+      document.getElementById('ratingInput').value = selectedRating;
     });
+  });
 
-    function submitReview() {
-      const reviewText = document.getElementById('review').value;
-      if (!selectedRating || !reviewText.trim()) {
-        alert("Please select a rating and enter a review.");
-        return;
-      }
-
-      fetch("https://script.google.com/macros/s/AKfycbwVa_ydp0T9YT2-9gfW14WXrQ3IQdZlM9-SgCO-tkkxx4Mq6U0PtHbFV_Y60LpTobbpag/exec", {
-        method: "POST",
-        body: JSON.stringify({
-          rating: selectedRating,
-          review: reviewText
-        }),
-        headers: {
-          "Content-Type": "application/json"
-        }
-      })
-      .then(res => res.text())
-      .then(msg => {
-        alert("Review submitted!");
-        document.getElementById('review').value = "";
-        stars.forEach(s => s.classList.remove('selected'));
-        selectedRating = 0;
-      })
-      .catch(err => alert("Error submitting review."));
+  function validateForm() {
+    const reviewText = document.getElementById('review').value.trim();
+    if (!selectedRating || !reviewText) {
+      alert("Please select a rating and enter a review.");
+      return false;
     }
-  </script>
+    return true;
+  }
+</script>
+
 </body>
 </html>
