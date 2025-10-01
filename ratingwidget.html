@@ -1,50 +1,81 @@
 <html>
 <head>
   <style>
-    .rating { display: flex; gap: 10px; margin-bottom: 10px; }
-    .star { font-size: 24px; cursor: pointer; color: gray; }
-    .star.selected { color: gold; }
-    textarea { width: 100%; height: 80px; resize: vertical; margin-bottom: 10px; }
-    button { padding: 6px 12px; font-size: 14px; cursor: pointer; }
+    .rating {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .star {
+      font-size: 24px;
+      cursor: pointer;
+      color: gray;
+    }
+    .star.selected {
+      color: gold;
+    }
+    input, textarea {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 6px;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+    textarea {
+      height: 80px;
+      resize: vertical;
+    }
+    button {
+      padding: 6px 12px;
+      font-size: 14px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
-  <h3>Rate This Site!</h3>
+  <h3>Rate this website!</h3>
+
   <div class="rating" id="rating">
-    <span class="star" data-value="1">★</span>
-    <span class="star" data-value="2">★</span>
-    <span class="star" data-value="3">★</span>
-    <span class="star" data-value="4">★</span>
-    <span class="star" data-value="5">★</span>
+    <span class="star" data-value="1">&#9733;</span>
+    <span class="star" data-value="2">&#9733;</span>
+    <span class="star" data-value="3">&#9733;</span>
+    <span class="star" data-value="4">&#9733;</span>
+    <span class="star" data-value="5">&#9733;</span>
   </div>
 
-<form action="https://script.google.com/macros/s/AKfycbwVa_ydp0T9YT2-9gfW14WXrQ3IQdZlM9-SgCO-tkkxx4Mq6U0PtHbFV_Y60LpTobbpag/exec" method="POST" onsubmit="return validateForm()">
-  <input type="hidden" name="rating" id="ratingInput">
-  <textarea name="review" id="review" placeholder="Enter Your Review Here!"></textarea>
-  <button type="submit">Submit</button>
-</form>
+  <form action="https://script.google.com/macros/s/AKfycbwVa_ydp0T9YT2-9gfW14WXrQ3IQdZlM9-SgCO-tkkxx4Mq6U0PtHbFV_Y60LpTobbpag/exec" 
+        method="POST" onsubmit="return validateForm()">
+    <input type="hidden" name="rating" id="ratingInput">
 
-<script>
-  let selectedRating = 0;
-  const stars = document.querySelectorAll('.star');
-  stars.forEach(star => {
-    star.addEventListener('click', () => {
-      stars.forEach(s => s.classList.remove('selected'));
-      star.classList.add('selected');
-      selectedRating = star.dataset.value;
-      document.getElementById('ratingInput').value = selectedRating;
+    <!-- New name field -->
+    <input type="text" name="username" id="username" placeholder="Please Enter A Name.">
+
+    <textarea name="review" id="review" placeholder="Leave your review here..."></textarea>
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    let selectedRating = 0;
+    const stars = document.querySelectorAll('.star');
+
+    stars.forEach(star => {
+      star.addEventListener('click', () => {
+        stars.forEach(s => s.classList.remove('selected'));
+        star.classList.add('selected');
+        selectedRating = star.dataset.value;
+        document.getElementById('ratingInput').value = selectedRating;
+      });
     });
-  });
 
-  function validateForm() {
-    const reviewText = document.getElementById('review').value.trim();
-    if (!selectedRating || !reviewText) {
-      alert("Please select a rating and enter a review.");
-      return false;
+    function validateForm() {
+      const name = document.getElementById('username').value.trim();
+      const reviewText = document.getElementById('review').value.trim();
+      if (!selectedRating || !name || !reviewText) {
+        alert("Please select a rating, enter your name, and write a review.");
+        return false;
+      }
+      return true;
     }
-    return true;
-  }
-</script>
-
+  </script>
 </body>
 </html>
