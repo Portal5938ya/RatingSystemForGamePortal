@@ -9,7 +9,7 @@
   </style>
 </head>
 <body>
-  <h3>Leave A Rating!</h3>:</h3>
+  <h3>Rate this game:</h3>
   <div class="rating" id="rating">
     <span class="star" data-value="1">★</span>
     <span class="star" data-value="2">★</span>
@@ -34,16 +34,29 @@
 
     function submitReview() {
       const reviewText = document.getElementById('review').value;
-      if (!selectedRating) {
-        alert("Please select a star rating.");
+      if (!selectedRating || !reviewText.trim()) {
+        alert("Please select a rating and enter a review.");
         return;
       }
-      if (!reviewText.trim()) {
-        alert("Please enter a review.");
-        return;
-      }
-      alert(`You rated this ${selectedRating} stars.\nYour review: ${reviewText}`);
-      // You can replace this alert with logic to send data to a server or store it
+
+      fetch("https://script.google.com/macros/s/AKfycbwVa_ydp0T9YT2-9gfW14WXrQ3IQdZlM9-SgCO-tkkxx4Mq6U0PtHbFV_Y60LpTobbpag/exec", {
+        method: "POST",
+        body: JSON.stringify({
+          rating: selectedRating,
+          review: reviewText
+        }),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      .then(res => res.text())
+      .then(msg => {
+        alert("Review submitted!");
+        document.getElementById('review').value = "";
+        stars.forEach(s => s.classList.remove('selected'));
+        selectedRating = 0;
+      })
+      .catch(err => alert("Error submitting review."));
     }
   </script>
 </body>
