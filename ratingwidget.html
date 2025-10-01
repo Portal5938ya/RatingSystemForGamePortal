@@ -1,0 +1,50 @@
+<html>
+<head>
+  <style>
+    .rating { display: flex; gap: 10px; margin-bottom: 10px; }
+    .star { font-size: 24px; cursor: pointer; color: gray; }
+    .star.selected { color: gold; }
+    textarea { width: 100%; height: 80px; resize: vertical; margin-bottom: 10px; }
+    button { padding: 6px 12px; font-size: 14px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h3>Leave A Rating!</h3>:</h3>
+  <div class="rating" id="rating">
+    <span class="star" data-value="1">★</span>
+    <span class="star" data-value="2">★</span>
+    <span class="star" data-value="3">★</span>
+    <span class="star" data-value="4">★</span>
+    <span class="star" data-value="5">★</span>
+  </div>
+
+  <textarea id="review" placeholder="Leave your review here..."></textarea>
+  <button onclick="submitReview()">Submit</button>
+
+  <script>
+    let selectedRating = 0;
+    const stars = document.querySelectorAll('.star');
+    stars.forEach(star => {
+      star.addEventListener('click', () => {
+        stars.forEach(s => s.classList.remove('selected'));
+        star.classList.add('selected');
+        selectedRating = star.dataset.value;
+      });
+    });
+
+    function submitReview() {
+      const reviewText = document.getElementById('review').value;
+      if (!selectedRating) {
+        alert("Please select a star rating.");
+        return;
+      }
+      if (!reviewText.trim()) {
+        alert("Please enter a review.");
+        return;
+      }
+      alert(`You rated this ${selectedRating} stars.\nYour review: ${reviewText}`);
+      // You can replace this alert with logic to send data to a server or store it
+    }
+  </script>
+</body>
+</html>
