@@ -1,0 +1,31 @@
+
+{
+  "format_version": 1,
+  "categories": [
+    "Gameplay",
+    "Graphics",
+    "Sound",
+    "Replayability",
+    "Controls"
+  ],
+  "rating_scale": {
+    "min": 1,
+    "max": 5,
+    "allow_half_points": false,
+    "labels": {
+      "1": "Poor",
+      "2": "Fair",
+      "3": "Good",
+      "4": "Very Good",
+      "5": "Excellent"
+    }
+  },
+  "default_rating": 3,
+  "user_votes_enabled": true,
+  "leaderboard_enabled": false,
+  "sync_to_portal": {
+    "enabled": true,
+    "method": "embed_widget",
+    "target_url": "https://sites.google.com/isd728.org/game-portal/home"
+  }
+}
